@@ -35,4 +35,4 @@ def networking():
 
 threading.Thread(name='networking', target=networking).start() # required multithreading to allow user input without pausing windivert
 
-print("\nHOI4 IP Viewer by Mastoid loaded.\nPlayer name and IP will be listed on connection.\nType block('ipaddresshere') to block an IP address.\n")
+print("\nHOI4 IP Viewer by Mastoid loaded.\nPlayer name and IP will be listed on connection.\nType block('ipaddresshere') to block an IP address.")
