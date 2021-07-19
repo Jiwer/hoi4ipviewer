@@ -11,11 +11,11 @@ BlockedIPs = set()
 
 def block(ip):
 	if not type(ip) is str:
-		print("IP must be in string format. An example block would be: block('69.168.1.30')")
+		print("\nIP must be in string format. An example block would be: block('69.168.1.30')")
 		return
 
 	BlockedIPs.add(ip)
-	print("Successfully added " + ip + " to the block list.")
+	print("\nSuccessfully added " + ip + " to the block list.")
 
 def networking():
 	with pydivert.WinDivert("udp.PayloadLength > 0") as w:
