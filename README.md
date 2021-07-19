@@ -1,4 +1,4 @@
-# hoi4ipviewer
+# HOI4 IP Viewer
 Python script that displays a player's IP address on connection.
 
 ![alt text](https://i.gyazo.com/5699342ca39ba6608d7e2414e0654b07.png)
