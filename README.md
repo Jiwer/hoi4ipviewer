@@ -12,3 +12,5 @@ USAGE
 5. Run the script. Type exec(open("C:/path_to_script_here").read()) in the python terminal or another way.
 6. Type block('ip here') in the python terminal to block an IP address.
 8. A new player's IP address is printed on connection automatically.
+
+Thanks to mio for helping test.
