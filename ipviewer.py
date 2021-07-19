@@ -25,7 +25,7 @@ def networking():
 			if "de0001000f0000000400" in Hex1 and packet.src_addr not in PlayerIPs:
 				NewHex1, NewHex2 = Hex1.split("03001b0001000f00", 1)
 				NewHex3, NewHex4 = NewHex2.split("de0001000f0000000400", 1)
-				print(bytearray.fromhex(NewHex3[4:]).decode() + " connected. " + packet.src_addr + "\n")
+				print("\n" + bytearray.fromhex(NewHex3[4:]).decode() + " connected. " + packet.src_addr)
 				PlayerIPs.add(packet.src_addr)
 
 			if packet.src_addr in BlockedIPs or packet.dst_addr in BlockedIPs:
