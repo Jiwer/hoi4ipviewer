@@ -14,8 +14,12 @@ def checkvalve(ip):
 	if not type(ip) is str:
 		print("IP must be in string format. An example block would be: checkvalve('69.168.1.30')")
 		return
-	
-	r = requests.get("http://ip-api.com/json/" + ip, verify=False)
+
+	try:
+		r = requests.get("http://ip-api.com/json/" + ip, verify=False)
+	except:
+		print("\nip-api connection failed. Manually check if " + ip + " is a Valve server.")
+		return
 
 	data = r.json()
 	
