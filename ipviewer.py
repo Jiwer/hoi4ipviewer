@@ -1,6 +1,5 @@
 import pydivert
 import threading
-import requests
 
 #de0001000f0000000400 name packet 1
 #160001000c00030000006b name packet 2
@@ -10,47 +9,29 @@ import requests
 PlayerIPs = set()
 BlockedIPs = set()
 
-def checkvalve(ip):
-	if not type(ip) is str:
-		print("IP must be in string format. An example block would be: checkvalve('69.168.1.30')")
-		return
-
-	try:
-		r = requests.get("http://ip-api.com/json/" + ip, verify=False)
-	except:
-		print("\nip-api connection failed. Manually check if " + ip + " is a Valve server.")
-		return
-
-	data = r.json()
-	
-	if r.status_code == 200 and "org" in data and "Valve Corporation" in data["org"]:
-		BlockedIPs.add(ip)
-		print("\nBlocked NAT attmept from " + ip)
-
 def block(ip):
-	if not type(ip) is str:
-		print("\nIP must be in string format. An example block would be: block('69.168.1.30')")
-		return
+    if not type(ip) is str:
+        print("\nIP must be in string format. An example block would be: block('69.168.1.30')")
+        return
 
-	BlockedIPs.add(ip)
-	print("\nSuccessfully added " + ip + " to the block list.")
+    BlockedIPs.add(ip)
+    print("\nSuccessfully added " + ip + " to the block list.")
 
 def networking():
-	with pydivert.WinDivert("udp.PayloadLength > 0") as w:
-		for packet in w:
-			Hex1 = packet.payload.hex()
+    with pydivert.WinDivert("udp.PayloadLength > 0") as w:
+        for packet in w:
+            Hex1 = packet.payload.hex()
 
-			if "de0001000f0000000400" in Hex1 and packet.src_addr not in PlayerIPs:
-				NewHex1, NewHex2 = Hex1.split("03001b0001000f00", 1)
-				NewHex3, NewHex4 = NewHex2.split("de0001000f0000000400", 1)
-				print("\n" + bytearray.fromhex(NewHex3[4:]).decode() + " connected. " + packet.src_addr)
-				PlayerIPs.add(packet.src_addr)
-				checkvalve(packet.src_addr)
+            if "de0001000f0000000400" in Hex1 and packet.src_addr not in PlayerIPs:
+                NewHex1, NewHex2 = Hex1.split("03001b0001000f00", 1)
+                NewHex3, NewHex4 = NewHex2.split("de0001000f0000000400", 1)
+                print("\n" + bytearray.fromhex(NewHex3[4:]).decode() + " connected. " + packet.src_addr)
+                PlayerIPs.add(packet.src_addr)
 
-			if packet.src_addr in BlockedIPs or packet.dst_addr in BlockedIPs:
-				packet.payload = "\x00\x01\x02".encode()
+            if packet.src_addr in BlockedIPs or packet.dst_addr in BlockedIPs:
+                packet.payload = "\x00\x01\x02".encode()
 
-			w.send(packet)
+            w.send(packet)
 
 threading.Thread(name='networking', target=networking).start() # required multithreading to allow user input without pausing windivert
 
