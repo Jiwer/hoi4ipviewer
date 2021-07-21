@@ -1,5 +1,6 @@
 import pydivert
 import threading
+import requests
 
 #de0001000f0000000400 name packet 1
 #160001000c00030000006b name packet 2
@@ -8,6 +9,19 @@ import threading
 
 PlayerIPs = set()
 BlockedIPs = set()
+
+def checkvalve(ip):
+	if not type(ip) is str:
+		print("IP must be in string format. An example block would be: checkvalve('69.168.1.30')")
+		return
+	
+	r = requests.get("http://ip-api.com/json/" + ip, verify=False)
+
+	data = r.json()
+	
+	if r.status_code == 200 and "org" in data and "Valve Corporation" in data["org"]:
+		BlockedIPs.add(ip)
+		print("\nBlocked NAT attmept from " + ip)
 
 def block(ip):
 	if not type(ip) is str:
@@ -27,6 +41,7 @@ def networking():
 				NewHex3, NewHex4 = NewHex2.split("de0001000f0000000400", 1)
 				print("\n" + bytearray.fromhex(NewHex3[4:]).decode() + " connected. " + packet.src_addr)
 				PlayerIPs.add(packet.src_addr)
+				checkvalve(packet.src_addr)
 
 			if packet.src_addr in BlockedIPs or packet.dst_addr in BlockedIPs:
 				packet.payload = "\x00\x01\x02".encode()
