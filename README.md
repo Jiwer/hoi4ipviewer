@@ -1,7 +1,13 @@
 # HOI4 IP Viewer
-Python script that displays a player's IP address on connection.
+Two python scripts that list players IP addresses. 
+
+hostiprevealer.py lists the host's IP address when attempting to make any connection to a game. This includes failing to connect, failing a password check, and having the wrong checksum.
+
+playeriprevealer.py lists a player's IP address and in-game name when they connect to your game. This script only works as the host.
 
 ![alt text](https://i.gyazo.com/5699342ca39ba6608d7e2414e0654b07.png)
+
+![alt text](https://i.gyazo.com/1de953fbfdc0e1cd87e5215f218b0b53.png)
 
 USAGE
 ------
@@ -9,8 +15,6 @@ USAGE
 2. Open an administrator command prompt.
 3. Type 'pip install pydivert' into cmd. (first time use only)
 4. Type 'python'. Python should now be running.
-5. Run the script. Type exec(open("C:/path_to_script_here").read()) in the python terminal or another way.
-6. Type block('ip here') in the python terminal to block an IP address.
-8. A new player's IP address is printed on connection automatically.
+5. Run the script. Type exec(open("C:/path_to_script_here.py").read()) in the python terminal or another way.
 
 Thanks to mio for helping test.
