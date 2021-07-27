@@ -1,5 +1,5 @@
 # HOI4 IP Viewer
-Two python scripts that list players IP addresses. 
+Two python scripts that list a player's IP address. 
 
 hostiprevealer.py lists the host's IP address when attempting to make any connection to a game. This includes failing to connect, failing a password check, and having the wrong checksum.
 
