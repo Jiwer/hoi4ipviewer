@@ -14,7 +14,7 @@ def networking():
 			Hex1 = packet.payload.hex()
 
 			if packet.dst_addr not in HostIPs:
-				if "de0001000f0000000400" in Hex1 or "010100000004" in Hex1:
+				if "de0001000f0000000400" in Hex1 or "010100000004" in Hex1 or "0100000000000030000000000000010002f0" in Hex1 or "00000002f00002" in Hex1:
 					print("\nThe host IP is: " + packet.dst_addr + " | Port: " + str(packet.dst_port))
 					HostIPs.add(packet.dst_addr)
 
